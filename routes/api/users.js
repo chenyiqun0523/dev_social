@@ -17,7 +17,7 @@ router.get('/test', (req, res) => res.json({msg: 'Users Works'}));
 
 
 // @route POST api/users/register
-// @new user registration
+// @desc new user registration
 // @access Public
 router.post('/register', (req, res) => {
     const {errors, isValid} = validateRegisterInput(req.body);
@@ -59,7 +59,7 @@ router.post('/register', (req, res) => {
 });
 
 // @route POST api/users/login
-// @user login / Returing JWT token
+// @desc user login / Returing JWT token
 // @access Public
 router.post('/login', (req,res) => {
     const {errors, isValid} = validateLoginInput(req.body);
@@ -104,7 +104,7 @@ router.post('/login', (req,res) => {
 });
 
 // @route POST api/users/current
-// @new return current user
+// @desc return current user
 // @access Private
 router.get('/current', passport.authenticate('jwt', {session: false}), (req, res) => {
     res.json({
