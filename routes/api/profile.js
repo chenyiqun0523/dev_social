@@ -3,6 +3,9 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
 
+// Load Validation
+const validateProfileInput = require('../../validation/profile');
+
 
 // Load Profile model
 const Profile = require('../../models/Profile');
@@ -21,7 +24,8 @@ router.get('/test', (req, res) => res.json({msg: 'Profile Works'}));
 // @access Private
 router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {     //used passport middleware in get request here
     const errors = {};
-    Profile.findOne({ user: req.user.id })
+    Profile.findOne({ user: req.user.id })      //user.id is included in the JWT token already
+    .populate('user', ['name', 'avatar'])      //populate user name and avatar into 'user' object
     .then(profile => {
         if (!profile) {
             errors.noprofile = 'There is no profile for this user';
@@ -38,6 +42,13 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => { 
 router.post('/', 
 passport.authenticate('jwt', {session: false}), 
 (req, res) => {     
+    const {errors, isValid} = validateProfileInput(req.body);
+
+    // Check Validation
+    if (!isValid) {
+        // Return any erros with 400 status
+        return res.status(400).json(errors);
+    }
     // Get fields
     const profileFields = {};
     profileFields.user = req.user.id;
