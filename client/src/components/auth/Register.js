@@ -5,7 +5,7 @@ import classnames from 'classnames';
 class Register extends Component {
   constructor() {
     super();
-    this.state = {    //top level local storage state
+    this.state = {    //component level local storage state
       name: '',
       email: '',
       password: '',
