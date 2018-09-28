@@ -20,6 +20,12 @@ class Register extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentDidMount() {   //if user already have token, bring him to dashboard directly
+    if(this.props.auth.isAuthenticated) {
+      this.props.history.push('/dashboard');
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.errors) {
       this.setState({errors: nextProps.errors});
@@ -40,7 +46,7 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    //Redux Action
+    //call Redux Action
     this.props.registerUser(newUser, this.props.history);
 
 
@@ -71,7 +77,7 @@ class Register extends Component {
                   value={this.state.name} 
                   onChange={this.onChange}   //call onChange method to display typing input
                 />
-                {errors.name && (
+                {errors.name && (    //display error message
                   <div className="invalid-feedback">{errors.name}</div>
                 )}
               </div>
