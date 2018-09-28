@@ -152,3 +152,4 @@ const mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, { registerUser })(withRouter(Register));
 //Using withRouter here. Once user finish register, re-route to login 
+//call registerUser action from the Actions files
