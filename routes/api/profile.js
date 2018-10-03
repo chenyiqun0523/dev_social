@@ -128,7 +128,7 @@ passport.authenticate('jwt', {session: false}),
 
     // Social
     profileFields.social = {};
-    if (req.body.youtube) profileFields.social.youtube = req.body.handle;
+    if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
     if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
     if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
     if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;

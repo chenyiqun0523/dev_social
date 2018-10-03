@@ -11,18 +11,46 @@ import { getProfileByHandle } from "../../actions/profileActions";
 
 class Profile extends Component {
   componentDidMount() {
-      if(this.props.match.params.handle) {  //get the handle from the url
-          this.props.getProfileByHandle(this.props.match.params.handle);
-      }
+    if (this.props.match.params.handle) {
+      //get the handle from the url
+      this.props.getProfileByHandle(this.props.match.params.handle);
+    }
   }
 
   render() {
-    return (
+    const { profile, loading } = this.props.profile;
+    let profileContent;
+
+    if (profile === null || loading) {
+      profileContent = <Spinner />;
+    } else {
+      profileContent = (
         <div>
-            <ProfileHeader />
-            <ProfileAbout />
-            <ProfileCreds />
-            <ProfileGithub />
+          <div className="row">
+            <div className="col-md-6">
+              <Link to="/profiles" className="btn btn-light mb-3 float-left">
+                Back To Profiles
+              </Link>
+            </div>
+            <div className="col-md-6" />
+          </div>
+          <ProfileHeader profile={profile}/>
+          <ProfileAbout />
+          <ProfileCreds />
+          <ProfileGithub />
+        </div>
+      );
+    }
+
+    return (
+        <div className="profile">
+            <div lassName="container">
+                <div className="row">
+                    <div className="col-md-12">
+                       {profileContent} 
+                    </div>
+                </div>
+            </div>
         </div>
     );
   }
@@ -31,11 +59,13 @@ class Profile extends Component {
 Profile.propTypes = {
   getProfileByHandle: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired
-  
 };
 
 const mapStateToProps = state => ({
   profile: state.profile
 });
 
-export default connect(mapStateToProps, {getProfileByHandle})(Profile);
+export default connect(
+  mapStateToProps,
+  { getProfileByHandle }
+)(Profile);
