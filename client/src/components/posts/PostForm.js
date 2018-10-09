@@ -25,10 +25,12 @@ class PostForm extends Component {
         e.preventDefault();
         
         const { user } = this.props.auth;
-
+        const { profile } = this.props.profile;
+        //console.log(profile.user.name);
         const newPost = {
             text: this.state.text,
             name: user.name,
+            handle: profile.handle,
             avatar: user.avatar
         }
 
@@ -72,11 +74,13 @@ class PostForm extends Component {
 PostForm.propTypes = {
     addPost: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
+    profile: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
     auth: state.auth,
+    profile: state.profile,
     errors: state.errors
 });
 

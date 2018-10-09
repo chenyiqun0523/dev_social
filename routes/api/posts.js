@@ -53,6 +53,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
         text: req.body.text,
         name: req.body.name,
         avatar: req.body.avatar,
+        handle: req.body.handle,
         user: req.user.id
     });
 
@@ -140,6 +141,7 @@ router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req
             const newComment = {
                 text: req.body.text,
                 name: req.body.name,
+                handle: req.body.handle,
                 avatar: req.body.avatar,
                 user: req.user.id
             }

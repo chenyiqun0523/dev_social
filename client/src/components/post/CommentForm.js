@@ -25,11 +25,13 @@ class CommentForm extends Component {
     e.preventDefault();
 
     const { user } = this.props.auth;
+    const { profile } = this.props.profile;
     const { postId } = this.props;
 
     const newComment = {
       text: this.state.text,
       name: user.name,
+      handle: profile.handle,
       avatar: user.avatar
     };
 
@@ -74,12 +76,14 @@ class CommentForm extends Component {
 CommentForm.propTypes = {
   addComment: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired,
   postId: PropTypes.string.isRequired,
   errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
+  profile: state.profile,
   errors: state.errors
 });
 
